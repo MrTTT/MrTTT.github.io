@@ -4,17 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Mac端_Apache_本地服务器 | 唐先森的技术博客</title>
+    <title>ios_8_用新的_api去注册远程推送功能 | 唐先森的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="唐先森的技术博客">
     
-    <meta name="description" content="Mac端 Apache 本地服务器
-步骤
-第一步：打开终端 输入 sudo apachectl start
-第二步：Finder下Cmd+G 输入 /library/WebServer/Documents  添加你所需要的文件 也可用系统自带的文件测试一下 打开后是这样的：
-
-第三步：获取文件读取格">
+    <meta name="description" content="iOS 8 用新的 API去注册远程推送功能:registerForRemoteNotifications。
+但是，这个 API，仅仅会注册一个静默功能的远程推送，尽管 App 之后会收到推送并进行处理，它不会在用户界面上有任何提示。那么如何在 iOS 8 下完成和 iOS 7 下一样的远程推送注册">
     
     
     
@@ -71,15 +67,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/29/Mac端-Apache-本地服务器/" title="Mac端_Apache_本地服务器" itemprop="url">Mac端_Apache_本地服务器</a>
+      <a href="/2014/10/29/ios-8-用新的-api去注册远程推送功能/" title="ios_8_用新的_api去注册远程推送功能" itemprop="url">ios_8_用新的_api去注册远程推送功能</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="唐先森的技术博客">唐先森的技术博客</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-29T07:22:03.000Z" itemprop="datePublished">10月 29 2014</time>
-    更新日期:<time datetime="2014-10-29T07:23:16.000Z" itemprop="dateModified">10月 29 2014</time>
+    <time datetime="2014-10-29T08:23:33.000Z" itemprop="datePublished">10月 29 2014</time>
+    更新日期:<time datetime="2014-10-29T08:23:46.000Z" itemprop="dateModified">10月 29 2014</time>
     
   </p>
 </header>
@@ -88,19 +84,18 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mac端_Apache_本地服务器"><span class="toc-number">1.</span> <span class="toc-text">Mac端 Apache 本地服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">1.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">1.2.</span> <span class="toc-text">例子</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS_8_用新的_API去注册远程推送功能:registerForRemoteNotifications。"><span class="toc-number">1.</span> <span class="toc-text">iOS 8 用新的 API去注册远程推送功能:registerForRemoteNotifications。</span></a></li></ol>
 		</div>
 		
-		<h1 id="Mac端_Apache_本地服务器">Mac端 Apache 本地服务器</h1>
-<h2 id="步骤">步骤</h2>
-<p><strong>第一步</strong>：打开终端 输入 sudo apachectl start</p>
-<p><strong>第二步</strong>：Finder下Cmd+G 输入 <strong>/library/WebServer/Documents</strong>  添加你所需要的文件 也可用系统自带的文件测试一下 打开后是这样的：</p>
-<p><img src="http://localhost/file.png" alt="Alt"></p>
-<p><strong>第三步</strong>：获取文件读取格式是：<strong><a href="http://localhost/＋文件名" target="_blank" rel="external">http://localhost/＋文件名</a></strong>，如：<strong><a href="http://localhost/PoweredByMacOSXLarge.gif" target="_blank" rel="external">http://localhost/PoweredByMacOSXLarge.gif</a></strong></p>
-<h2 id="例子">例子</h2>
-<p><img src="http://localhost/PoweredByMacOSXLarge.gif" alt="Alt"></p>
-<p><strong>也可用Safari打开</strong></p>
-<p> <a href="http://localhost/PoweredByMacOSXLarge.gif" target="_blank" rel="external">http://localhost/PoweredByMacOSXLarge.gif</a> </p>
+		<h1 id="iOS_8_用新的_API去注册远程推送功能:registerForRemoteNotifications。">iOS 8 用新的 API去注册远程推送功能:registerForRemoteNotifications。</h1>
+<p><strong>但是，这个 API，仅仅会注册一个静默功能的远程推送，尽管 App 之后会收到推送并进行处理，它不会在用户界面上有任何提示。那么如何在 iOS 8 下完成和 iOS 7 下一样的远程推送注册支持？下面的代码可以让推送的支持在 iOS 7 和 iOS 8 下都正常工作，if 里面的是 iOS 8 的，而 else 那里是 iOS 7。</strong></p>
+<hr>
+<p>UIApplication *application = [UIApplication sharedApplication];</p>
+<p>if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {<br>    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge<br>                                                                                         |UIRemoteNotificationTypeSound<br>                                                                                         |UIRemoteNotificationTypeAlert)<br>                                                                             categories:nil];<br>    [application registerUserNotificationSettings:settings];<br>    [application registerForRemoteNotifications];<br>} else {<br>    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge<br>                                                     |UIRemoteNotificationTypeSound<br>                                                     |UIRemoteNotificationTypeAlert)];<br>}</p>
+<hr>
+<p>可以看到，iOS 8 把原先一步到位的 RemoteNotification 的注册分成两部分，一部分是注册新引入的那个「UIUserNotificationSettings」，另一部分才是 RemoteNotifications。Apple 为什么要这样设计？</p>
+<p>简单的说，Apple 在 iOS 8 将 RemoteNotification 和 LocalNotification 统一了起来。两种 Notifications 将统一由 UIUserNotificationSettings 来管理用户界面相关的东西：标记、声音和提醒。除了统一用户界面的通知外，UIUserNotificationSettings 还引入了 UIUserNotificationCategory，可以让用户方便的直接在 Notification 上进行一些快捷的操作（Action）。这部分我还没玩过，所以又不多讲了。</p>
+<p>总之，Apple 为了推进新的技术，不惜直接把老的 API 弄成不工作，实在是让人惊叹…</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -110,7 +105,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2014/10/29/Mac端-Apache-本地服务器/" data-title="Mac端_Apache_本地服务器 | 唐先森的技术博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2014/10/29/ios-8-用新的-api去注册远程推送功能/" data-title="ios_8_用新的_api去注册远程推送功能 | 唐先森的技术博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -119,14 +114,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/10/29/ios-8-用新的-api去注册远程推送功能/" title="ios_8_用新的_api去注册远程推送功能">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ios_8_用新的_api去注册远程推送功能</span>
+
+<div class="next">
+<a href="/2014/10/29/Mac端-Apache-本地服务器/"  title="Mac端_Apache_本地服务器">
+ <strong>NEXT:</strong><br/> 
+ <span>Mac端_Apache_本地服务器
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -136,7 +131,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mac端_Apache_本地服务器"><span class="toc-number">1.</span> <span class="toc-text">Mac端 Apache 本地服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">1.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">1.2.</span> <span class="toc-text">例子</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS_8_用新的_API去注册远程推送功能:registerForRemoteNotifications。"><span class="toc-number">1.</span> <span class="toc-text">iOS 8 用新的 API去注册远程推送功能:registerForRemoteNotifications。</span></a></li></ol>
   </div>
 
 <div id="asidepart">
